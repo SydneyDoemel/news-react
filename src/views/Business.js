@@ -3,7 +3,7 @@ import Article from '../components/Article';
 
 // import React from 'react'
 
-export default function Business({category}) {
+export default function Business({category, user}) {
     const [articles, setArticles]=useState([])
    
 
@@ -28,7 +28,7 @@ export default function Business({category}) {
     const showArticles = () => {
         return articles.map((a, i) => 
             (
-                <Article key={i} articleInfo={a} />
+                <Article key={i} user={user} articleInfo={a} />
             )
         )
     }

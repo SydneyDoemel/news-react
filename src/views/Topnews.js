@@ -3,7 +3,7 @@ import Article from '../components/Article';
 
 // import React from 'react'
 
-export default function Topnews() {
+export default function Topnews({user}) {
     const [articles, setArticles]=useState([])
     const [homeArticles, setHomeArticles]=useState([])
 
@@ -24,7 +24,7 @@ export default function Topnews() {
     const showArticles = () => {
         return articles.map((a, i) => 
             (
-                <Article key={i} articleInfo={a}/>
+                <Article key={i} user={user} articleInfo={a}/>
             )
         )
     }

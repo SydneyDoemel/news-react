@@ -4,7 +4,7 @@ import Business from '../views/Business';
 
 
 export default function Nav({user, logMeOut, category, setCategory}) {
-  // const [category, setCategory]=useState()
+ 
   return (
     
     <div>
@@ -31,6 +31,9 @@ export default function Nav({user, logMeOut, category, setCategory}) {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/preferences">Preferences</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/saved">Saved</Link>
           </li>
           <li>
           <div className="dropdown">
@@ -96,7 +99,7 @@ export default function Nav({user, logMeOut, category, setCategory}) {
       </div>
     </div>
   </nav>
-  {/* {<Business category={category}/>} */}
+
   </div>
   )
 }
