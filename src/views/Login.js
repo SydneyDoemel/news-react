@@ -54,7 +54,7 @@ export default class Login extends Component {
     };
 
     render() {
-        return this.state.redirect ? <Navigate to='/'/> :
+        return this.state.redirect ? <Navigate to='/preferences'/> :
         (
             <form className='col-4' onSubmit={(e) => { this.sendBasicAuth(e) }}>
 

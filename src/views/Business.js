@@ -3,7 +3,7 @@ import Article from '../components/Article';
 
 // import React from 'react'
 
-export default function Business({category, user}) {
+export default function Business({category, user, savedList}) {
     const [articles, setArticles]=useState([])
    
 
@@ -28,7 +28,7 @@ export default function Business({category, user}) {
     const showArticles = () => {
         return articles.map((a, i) => 
             (
-                <Article key={i} user={user} articleInfo={a} />
+                <Article key={i} savedList={savedList} user={user} articleInfo={a} />
             )
         )
     }
@@ -41,7 +41,7 @@ export default function Business({category, user}) {
                 
             <h3 className="text-center my-4">{category}</h3>
                 
-                <div className='row'>
+                <div className='row d-flex justify-content-around'>
 
               
                     {showArticles()}

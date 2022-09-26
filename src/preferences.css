@@ -4,3 +4,22 @@
     border-radius: 10px;
     width: 15rem;
 }
+.pref-container {  display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 0.5fr 1fr 4fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "pref-header pref-header"
+      "pref-add-cats pref-add-cats"
+      "suggested-cats my-cats";
+  }
+  
+  .pref-header { grid-area: pref-header; }
+  
+  .pref-add-cats { grid-area: pref-add-cats; }
+  
+  .my-cats { grid-area: my-cats; }
+  
+  .suggested-cats { grid-area: suggested-cats; }
+  

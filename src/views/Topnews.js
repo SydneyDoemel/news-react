@@ -3,7 +3,7 @@ import Article from '../components/Article';
 
 // import React from 'react'
 
-export default function Topnews({user}) {
+export default function Topnews({user, savedList}) {
     const [articles, setArticles]=useState([])
     const [homeArticles, setHomeArticles]=useState([])
 
@@ -19,12 +19,12 @@ export default function Topnews({user}) {
     
     useEffect(()=>{
         getNews()
-    },[])
+    },[savedList])
 
     const showArticles = () => {
         return articles.map((a, i) => 
             (
-                <Article key={i} user={user} articleInfo={a}/>
+                <Article key={i} savedList={savedList} user={user} articleInfo={a}/>
             )
         )
     }
@@ -37,7 +37,7 @@ export default function Topnews({user}) {
                 
         <h3 className="text-center my-4">Top News Stories</h3>
                
-                <div className='row'>
+                <div className='row d-flex justify-content-around'>
 
 
                     {showArticles()}

@@ -1,7 +1,8 @@
 import React from 'react'
-import '../news.css'
+
+import '../article.css'
 import { published_date } from "../Regex";
-export default function SavedArticle({articleInfo, user, getArticles}) {
+export default function SavedArticle({articleInfo, user, getArticles, savedArticlesLst}) {
  
    const delArticle = async (e) => {
     e.preventDefault();
@@ -28,12 +29,16 @@ export default function SavedArticle({articleInfo, user, getArticles}) {
                     <p>{articleInfo.author} - {articleInfo.source_name}</p>
                     <p className="card-text">{articleInfo.description}</p>
                     <p className="card-text">{articleInfo.source_name} ({published_date.exec(articleInfo.published_at)})</p>
+                    
+                </div>
+                <div className='card-footer d-flex justify-content-between'>
                     <a href={articleInfo.url} className="btn btn-primary">Go to article</a>
                     <form onSubmit={(e)=>delArticle(e)}>
                     <button type='submit' className='btn btn-danger'>Unsave</button>
                     <input type='hidden' name="delart" value={articleInfo.title}/>
+                
                     </form>
-                </div>
+                    </div>
             </div>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Article from '../components/Article';
+import '../article.css'
 import SavedArticle from '../components/SavedArticle';
 
 export default function Saved({user}) {
@@ -21,7 +22,7 @@ export default function Saved({user}) {
   const showArticles = () => {
     return savedArticles.map((a, i) => 
         (
-            <SavedArticle key={i} getArticles={getArticles} user={user} articleInfo={a}/>
+            <SavedArticle key={i} savedArticlesLst={savedArticles} getArticles={getArticles} user={user} articleInfo={a}/>
         )
     )
 }
@@ -31,7 +32,7 @@ export default function Saved({user}) {
       <div>
         <h3>Saved Articles</h3>
       </div>
-      <div>
+      <div className='row d-flex justify-content-around'>
         {showArticles()}
       </div>
       </div>
