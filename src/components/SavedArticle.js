@@ -32,7 +32,7 @@ export default function SavedArticle({articleInfo, user, getArticles, savedArtic
                     
                 </div>
                 <div className='card-footer d-flex justify-content-between'>
-                    <a href={articleInfo.url} className="btn btn-primary">Go to article</a>
+                    <a href={articleInfo.url} className="btn btn-outline-dark">Read</a>
                     <form onSubmit={(e)=>delArticle(e)}>
                     <button type='submit' className='btn btn-danger'>Unsave</button>
                     <input type='hidden' name="delart" value={articleInfo.title}/>

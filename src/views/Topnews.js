@@ -35,7 +35,7 @@ export default function Topnews({user, savedList}) {
     <div>
         <div>
                 
-        <h3 className="text-center my-4">Top News Stories</h3>
+        <h3 className="display-4 my-4">Top Stories</h3>
                
                 <div className='row d-flex justify-content-around'>
 

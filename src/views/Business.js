@@ -23,7 +23,7 @@ export default function Business({category, user, savedList}) {
     useEffect(()=>{
         
         getNews(category)
-    },[category])
+    },[category, savedList])
 
     const showArticles = () => {
         return articles.map((a, i) => 
@@ -39,7 +39,7 @@ export default function Business({category, user, savedList}) {
     <div>
         <div>
                 
-            <h3 className="text-center my-4">{category}</h3>
+            <h3 className="display-5 my-4">{category}</h3>
                 
                 <div className='row d-flex justify-content-around'>
 

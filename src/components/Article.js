@@ -24,7 +24,8 @@ export default function Article({articleInfo, user, savedList}) {
     });
     const data = await res.json();
     console.log(data);
-    setForceRender(prev => prev + 1);
+    let x = forceRender+1
+    setForceRender(x);
     
   };
   const delArticle = async (e) => {
@@ -40,7 +41,8 @@ export default function Article({articleInfo, user, savedList}) {
       }),
     });
     const data = await res.json();
-    setForceRender(prev => prev + 1);
+    let x = forceRender +1;
+    setForceRender(x);
     
    
   };
@@ -68,7 +70,7 @@ useEffect(()=>{
                 <div className='card-footer '>
                 <p className="card-text">{articleInfo.source.name} ({published_date.exec(articleInfo.publishedAt)})</p> 
                 <div className='d-flex justify-content-between'>
-                    <a href={articleInfo.url} className="btn btn-primary">Go to article</a>
+                    <a href={articleInfo.url} className="btn btn-outline-dark">Read</a>
                     {savedList? <>
                     {savedList.includes(articleInfo.title)?<>
                       <form onSubmit={(e)=>delArticle(e)}>

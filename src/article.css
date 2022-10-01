@@ -1,10 +1,17 @@
+ *{
+  font-family: 'Merriweather', serif;
+
+ }
  img{
     margin-top: 10px;
 } 
 /* .card{
     width: 20rem;
 }  */
-
+.the-brand{
+  font-family: 'Abril Fatface', cursive;
+  
+}
 div.card-footer{
     background-color: white;
     border: none;

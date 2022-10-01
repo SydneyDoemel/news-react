@@ -4,6 +4,7 @@ import HeaderArticles from '../components/HeaderArticles';
 import MainArticles from '../components/MainArticles';
 
 // import React from 'react'
+ let articles_lst=[]
 
 export default function News({user, savedList}) {
     const [articlesLst, setArticlesLst]=useState([])
@@ -14,23 +15,15 @@ export default function News({user, savedList}) {
     const [myCats, setMyCats]=useState([])
     const [searchString, setSearchString]=useState()
     const [forceRender, setForceRender] = useState(0)
-    const getNews = async () => {
-        for (let x of myCats){
-            const res = await fetch(`https://newsapi.org/v2/everything?q=${x}&sortBy=relevancy&apiKey=ace489dd71b74e8f9cf8aeedf4c0a864&pageSize=10`);
-            const data = await res.json()
-            console.log(data)
-            console.log(x, "!")
-        //     const new_lst=[];
-        //     for (let x of data.articles){
-        //     new_lst.push(x.title)
-        // }
-             let new_articles=data.articles
-             setArticles([...articles, new_articles]);
-            
-        }
-        
+    const date = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) 
+    const getNews = async (input) => {
+        const res = await fetch(`https://newsapi.org/v2/everything?q=${input}&sortBy=relevancy&apiKey=ace489dd71b74e8f9cf8aeedf4c0a864&pageSize=20`);
+        const data = await res.json()
+        console.log(data)
+        setArticles(data.articles);
+       
     }
-    
+       
     
     const getCategories = async () => {
         const res = await fetch(`http://localhost:5000/api/savedcategories/${user.id}`);
@@ -49,8 +42,8 @@ export default function News({user, savedList}) {
     },[])
     useEffect(()=>{
         
-        getNews();
-    },[myCats])
+        getNews(searchString);
+    },[searchString])
 
 
     const showArticles = () => {
@@ -84,12 +77,14 @@ export default function News({user, savedList}) {
   return (
     <div>
         <div>
-                <h3 className='text-center my-4'>MyNews</h3>
+            <div className='d-flex flex-row justify-content-between'>
+                <h3 className='my-4'>{date}</h3>
 
-                <form className='d-flex my-4' role='search' onSubmit={search}>
-                    <input className='form-control w-25 me-3' type='search' name='search'/>
-                    <button className='btn btn-outline-success'>Search</button>
+                <form className='d-flex my-4 ' role='search' onSubmit={search}>
+                    <input className='form-control w-75 me-3' type='search' name='search'/>
+                    <button className='btn btn-outline-success me-3'>Search</button>
                 </form>
+                </div>
                 {/* <div className='row'>
                     <div className='col-lg-6 col-sm-9 col-xs-4'>{showHeaderArticles()}</div>
                     <div className='col-lg-6 col-sm-6 col-xs-6'> {showMainArticles()}</div>
