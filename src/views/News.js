@@ -1,99 +1,144 @@
-import React, { Component, useEffect, useState } from 'react'
-import Article from '../components/Article';
-import HeaderArticles from '../components/HeaderArticles';
-import MainArticles from '../components/MainArticles';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Article from "../components/Article";
+import "../article.css";
 
-// import React from 'react'
- let articles_lst=[]
+export default function News({ user, savedList }) {
+  const [articles, setArticles] = useState([]);
+  const [guestArticles, setGuestArticles] = useState([]);
+  const [myCats, setMyCats] = useState([]);
+  const [searchString, setSearchString] = useState();
 
-export default function News({user, savedList}) {
-    const [articlesLst, setArticlesLst]=useState([])
-    const [articles, setArticles]=useState([])
-    const [headerArticles, setHeaderArticles]=useState([])
-    const [mainArticles, setMainArticles]=useState([])
-    
-    const [myCats, setMyCats]=useState([])
-    const [searchString, setSearchString]=useState()
-    const [forceRender, setForceRender] = useState(0)
-    const date = new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) 
-    const getNews = async (input) => {
-        const res = await fetch(`https://newsapi.org/v2/everything?q=${input}&sortBy=relevancy&apiKey=ace489dd71b74e8f9cf8aeedf4c0a864&pageSize=20`);
-        const data = await res.json()
-        console.log(data)
-        setArticles(data.articles);
-       
-    }
-       
-    
-    const getCategories = async () => {
-        const res = await fetch(`http://localhost:5000/api/savedcategories/${user.id}`);
-        const data = await res.json();
-        const new_cat = data.search
-        setSearchString(new_cat)
-        console.log(new_cat);
-        const listCats=data.categories;
-        setMyCats(listCats)
-    }
-    
-    useEffect(()=>{
-        // getNews('bitcoin', 'sports')
-        getCategories();
-       
-    },[])
-    useEffect(()=>{
-        
-        getNews(searchString);
-    },[searchString])
+  const date = new Date().toLocaleDateString("en-us", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
+  const getNews = async (input) => {
+    const res = await fetch(
+      `https://newsapi.org/v2/everything?q=${input}&sortBy=relevancy&apiKey=ace489dd71b74e8f9cf8aeedf4c0a864&pageSize=15`
+    );
+    const data = await res.json();
+    console.log(data.articles);
+    const arts = data.articles;
+    setArticles((articles) => [...articles, ...arts]);
+  };
 
-    const showArticles = () => {
-        return articles.map((a, i) => 
-            (
-                <Article key={i} savedList={savedList} user={user} articleInfo={a}/>
-            )
-        )
-    }
-    const showHeaderArticles = () => {
-        return headerArticles.map((a, i) => 
-            (
-                <HeaderArticles key={i} savedList={savedList} user={user} articleInfo={a}/>
-            )
-        )
-    }
-    const showMainArticles = () => {
-        return mainArticles.map((a, i) => 
-            (
-                <MainArticles key={i} savedList={savedList} user={user} articleInfo={a}/>
-            )
-        )
-    }
+  const guestNews = async (input) => {
+    const res = await fetch(
+      `https://newsapi.org/v2/everything?q=${input}&apiKey=18ff32c491614efe949c74297bdd578c&pageSize=20`
+    );
+    const data = await res.json();
+    console.log(data);
+    setGuestArticles(data.articles);
+    console.log(`searched for ${input}`);
+  };
 
-    const search = (e) => {
-        e.preventDefault();
-        const input = e.target.search.value;
-        getNews(input)
-    };
+  const getCategories = async () => {
+    const res = await fetch(
+      `http://localhost:5000/api/savedcategories/${user.id}`
+    );
+    const data = await res.json();
+    const new_cat = data.search;
+    setSearchString(new_cat);
+    console.log(new_cat);
+    const listCats = data.categories;
+    setMyCats(listCats);
+  };
+  const myNewsArticles = () => {
+    if (articles) {
+      for (let x of myCats) {
+        getNews(x);
+      }
+    } else {
+      getNews("general");
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  useEffect(() => {
+    myNewsArticles();
+  }, [myCats]);
+  useEffect(() => {
+    guestNews("today");
+  }, []);
+
+  const showArticles = () => {
+    return articles.map((a, i) => (
+      <Article
+        key={i}
+        getNews={getNews}
+        savedList={savedList}
+        user={user}
+        articleInfo={a}
+      />
+    ));
+  };
+  const showGuestArticles = () => {
+    return guestArticles.map((a, i) => (
+      <Article
+        key={i}
+        getNews={getNews}
+        savedList={savedList}
+        user={user}
+        articleInfo={a}
+      />
+    ));
+  };
+
+  const search = (e) => {
+    e.preventDefault();
+    const input = e.target.search.value;
+    guestNews(input);
+  };
 
   return (
     <div>
+      <div className="news-container">
         <div>
-            <div className='d-flex flex-row justify-content-between'>
-                <h3 className='my-4'>{date}</h3>
+          <h3 className="dispatched-font-news-header display-4">Dispatched</h3>
+          <div className="d-flex flex-row justify-content-between">
+            <h3 className="my-4">{date}</h3>
+            <form className="d-flex mt-4 mb-4" role="search" onSubmit={search}>
+              <input
+                className="form-control w-75 me-3"
+                type="search"
+                name="search"
+              />
+              <button className="btn btn-outline-success me-3 mb-3">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
 
-                <form className='d-flex my-4 ' role='search' onSubmit={search}>
-                    <input className='form-control w-75 me-3' type='search' name='search'/>
-                    <button className='btn btn-outline-success me-3'>Search</button>
-                </form>
-                </div>
-                {/* <div className='row'>
-                    <div className='col-lg-6 col-sm-9 col-xs-4'>{showHeaderArticles()}</div>
-                    <div className='col-lg-6 col-sm-6 col-xs-6'> {showMainArticles()}</div>
-                </div> */}
-                <div className='row d-flex justify-content-around'>
-
-
-                    {showArticles()}
-                </div>
+        {user.username ? (
+          <>
+            <div className="row d-flex justify-content-around">
+              {showArticles()}
             </div>
+          </>
+        ) : (
+          <>
+            <div className="my-5 d-flex news-blurb flex-row align-items-baseline justify-content-center">
+              <Link className="sign-up-link me-2" to="/signup">
+                Sign up{" "}
+              </Link>
+              <p className="me-2">to</p>
+              <p className="dispatched-font-news me-2">Dispatched</p> to save
+              articles and customize the news you see!{" "}
+            </div>
+            <div className="row d-flex justify-content-around">
+              {showGuestArticles()}
+            </div>
+          </>
+        )}
+      </div>
     </div>
-  )}
+  );
+}

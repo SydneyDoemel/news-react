@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import '../article.css'
-export default function Preferences({ user }) {
+import '../preferences.css'
+
+import Modal from "../components/Modal";
+
+
+export default function Preferences({ user, newUser }) {
   const [savedCats, setSavedCats] = useState([]);
+  const [checked, setChecked]=useState(false)
+ 
 
   const search = (e) => {
     e.preventDefault();
@@ -55,24 +62,37 @@ export default function Preferences({ user }) {
 
   return (
     <>
-      
+    <Modal/>
+     
   <div className="pref-container">
-    <div className="pref-header text-center my-3">
+    <div className="pref-header text-center mt-3 mb-5">
       <h2>Preferences</h2>
+    
+      <div className="d-flex align-items-center control-group">
+      {checked? <><div className="text-center ms-5 tool-tip tool-tip4"><i class="ph-arrow-bend-left-up arrow1"></i><p className="">See articles that interest you here</p></div></>:<></>}
+        <label htmlFor="help" className="ms-auto me-3 mt-1 control control-checkbox">Info View
+        <input type="checkbox" id="help" className="mt-1 checkbox" checked={checked}  onChange={() => setChecked((prev) => !prev)}></input>
+        <div className="control_indicator"></div>
+        </label>
+      
+      </div>
     </div>
+   
   <div className="pref-add-cats ">
+  {checked? <><div className="text-center ms-5 tool-tip tool-tip1"><i className="ph-arrow-arc-left arrow1"></i><p className="">add your own custom interests here</p></div></>:<></>}
     <form className="mt-4 d-flex flex-row justify-content-center" onSubmit={(e) => sendCategory(e)}>
     <input className="form-control me-2 w-25" name="category" placeholder="Chicago Pizza"/>
-    <button className="btn btn-primary">Add</button>
+    <button className="btn btn-primary add-pref-btn ">Add</button>
   </form>
   </div>
   <div className="my-cats text-center ">
+  {checked? <><div className="text-center ms-5  tool-tip tool-tip2"><i className="ph-arrow-arc-left arrow2"></i><p className="">edit saved interests</p></div></>:<></>}
   <h4>Saved Interests</h4>
   <ul className="ms-5">
             {savedCats? <>
-            {savedCats.map((title) => (
+            {savedCats.map((title, i) => (
               <>
-                <li className="d-flex flex-row align-items-baseline my-5">
+                <li key={i} className="d-flex flex-row align-items-baseline my-5">
                   <p className="w-50">{title}</p>
                   <form onSubmit={(e) => delCategory(e)}>
                     <button className="btn ">
@@ -85,10 +105,11 @@ export default function Preferences({ user }) {
             ))}
             </>:<><p>No Saved Interests</p></>}
           </ul>
+        
   </div>
   <div className="suggested-cats px-4">
   <div className="row d-flex justify-content-around mx-auto">
-            
+  {checked? <><div className="text-center ms-5  tool-tip tool-tip3"><i className="ph-arrow-arc-left arrow3"></i><p className="">add interests</p></div></>:<></>}
             <div className=" category-square d-flex flex-column justify-content-between card my-3" style={{ width: "16rem", height:"16rem" }}>
             <img className="card-img-top" src='https://image.cnbcfm.com/api/v1/image/106240744-1573590258713politicaldebate.jpg?v=1573590321&w=740&h=416&ffmt=webp' alt="Card image cap" />
             

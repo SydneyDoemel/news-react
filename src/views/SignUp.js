@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 export default class SignUp extends Component {
 constructor(props) {
@@ -16,7 +16,7 @@ constructor(props) {
         try{
         e.preventDefault();
 
-        if (e.target.password.value !== e.target.confirmPassword.value){ // making sure the password AND confirm password match
+        if (e.target.password.value !== e.target.confirmPassword.value){
             return
         }
 
@@ -40,8 +40,13 @@ constructor(props) {
 
     render() {
         return this.state.redirect ? <Navigate to="/login"/>:
-         (
-            <form className='col-4' onSubmit={(e)=>{this.sendSignUpInfo(e)}}>
+         (<>
+         <div className='login-card'>
+            <div className="login-header-cont">
+            <h5 className="login-header">Signup For </h5>
+              <h5 className="brand-label">Dispatched </h5>
+            </div>
+            <form className='' onSubmit={(e)=>{this.sendSignUpInfo(e)}}>
 
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">Username</label>
@@ -49,10 +54,10 @@ constructor(props) {
                 </div>
 
 
-                <div className="mb-3">
+                <div className="mb-3 login-form">
                     <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                     <input type="email" className="form-control" name='email'/>
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                    
                 </div>
                 <div className="mb-3">
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
@@ -63,8 +68,19 @@ constructor(props) {
                     <input type="password" className="form-control" name='confirmPassword'/>
                 </div>
                 
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary login-btn ">Sign Up<i className="fa-solid fa-arrow-right-long fa-lg"></i></button>
+                <p className="mt-3">
+                Already have an account?{" "}
+                <Link to='/login' className="login-link2" href="#">
+                  Log In
+                </Link>
+                .
+              </p>
             </form>
+
+            </div>
+          
+            </>
         )
     }
 }

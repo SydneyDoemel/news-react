@@ -1,11 +1,11 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import Article from '../components/Article';
 
-// import React from 'react'
+
 
 export default function Topnews({user, savedList}) {
     const [articles, setArticles]=useState([])
-    const [homeArticles, setHomeArticles]=useState([])
+    
 
 
     const getNews = async (input) => {
@@ -15,8 +15,6 @@ export default function Topnews({user, savedList}) {
         setArticles(data.articles)
     }
    
-  
-    
     useEffect(()=>{
         getNews()
     },[savedList])
@@ -29,13 +27,11 @@ export default function Topnews({user, savedList}) {
         )
     }
 
-    
-
   return (
-    <div>
+    <div className='top-stories-container'>
         <div>
                 
-        <h3 className="display-4 my-4">Top Stories</h3>
+        <h3 className="display-4 my-4">Current Headlines</h3>
                
                 <div className='row d-flex justify-content-around'>
 

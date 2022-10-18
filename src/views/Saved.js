@@ -28,9 +28,9 @@ export default function Saved({user}) {
 }
 
   return (
-    <div>
+    <div className='saved-container'>
       <div>
-        <h3>Saved Articles</h3>
+        <h3 className='display-5 my-4 '>Saved Articles</h3>
       </div>
       <div className='row d-flex justify-content-around'>
         {showArticles()}
